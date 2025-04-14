@@ -1249,7 +1249,11 @@ img {
   }
 
   .home__blob {
-    width: 250px;
+    width: 200px;
+  }
+
+  .home__blob-img {
+    width: 200px;
   }
 
   .home__social-icon {
