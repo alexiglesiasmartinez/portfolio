@@ -172,8 +172,8 @@ img {
 
 /*==================== REUSABLE CSS CLASSES ====================*/
 .section {
-  padding: 2rem 0 4rem;
-  margin-bottom: 40px;
+  padding: 0rem 0 4rem;
+  margin-bottom: 15px;
 }
 
 .section__title {
@@ -337,7 +337,7 @@ img {
 }
 
 .home__blob-img {
-  width: 220px;
+  width: 300px;
   border-radius: 50%;
   display: block;
   margin: auto;
@@ -889,11 +889,9 @@ img {
 }
 
 .portfolio__modal-content {
-  position: relative;
-  background: #fff;
   border-radius: 8px;
-  max-width: 90%;
-  max-height: 90vh;
+  max-width: 70vw;
+  max-height: 80vh;
   overflow: auto;
   text-align: center;
   opacity: 1;
@@ -1057,6 +1055,7 @@ img {
 
 .contact__information {
   display: flex;
+  align-items: center;
   margin-bottom: var(--mb-2);
 }
 
@@ -1158,6 +1157,17 @@ img {
 
 .footer__social:hover {
   color: var(--first-color-lighter);
+}
+
+.footer__socials {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.footer__socials a {
+  padding: 0px !important;
+  margin: 0px !important;
 }
 
 .footer__copy {
@@ -1297,7 +1307,7 @@ img {
   }
   .home__img {
     order: 1;
-    justify-self: center;
+    justify-self: end;
   }
 
   .about__container,
@@ -1329,7 +1339,7 @@ img {
       margin: 0;
     }
     .section {
-      padding: 6rem 0 2rem;
+      padding: 6rem 0 0;
     }
     .section__subtitle {
       margin-bottom: 4rem;
