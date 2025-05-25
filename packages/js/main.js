@@ -106,8 +106,8 @@ let swiperPortfolio = new Swiper(".portfolio__container", {
     clickable: true,
   },
 
-  /* mousewheel: true,
-  keyboard: true, */
+  mousewheel: true,
+  keyboard: true,
 });
 
 const modalPortfolio = document.getElementById('portfolio-modal');
@@ -229,8 +229,8 @@ themeButton.addEventListener("click", () => {
 document.getElementById('contact-form').addEventListener('submit', function(event) {
   event.preventDefault();
   const formMessage = document.getElementById('form-message');
-  emailjs.sendForm('service_f0msl6b', 'template_g3w80ue', this)
-    .then(function() {
+  emailjs.sendForm('service_253nqg9', 'template_g3w80ue', this)
+    .then(function(response) {
       formMessage.textContent = 'Message sent successfully! I will contact you soon :)';
       formMessage.className = 'form-message success';
       document.getElementById('contact-form').reset();
@@ -241,10 +241,43 @@ document.getElementById('contact-form').addEventListener('submit', function(even
   }, function(error) {
       formMessage.textContent = 'There was an error sending the message. Please try again.';
       formMessage.className = 'form-message error';
-      console.log('Error:', error);
       setTimeout(() => {
           formMessage.className = 'form-message';
           formMessage.textContent = '';
       }, 5000);
   });
 });
+
+/* ... (mantén todo el código existente hasta antes de la función scrollAnimation) ... */
+
+/*==================== SCROLL SECTIONS ANIMATION ====================*/
+function scrollAnimation() {
+  const sections = document.querySelectorAll(".section");
+  const windowHeight = window.innerHeight;
+
+  sections.forEach((section) => {
+    const sectionTop = section.getBoundingClientRect().top;
+    const sectionBottom = section.getBoundingClientRect().bottom;
+
+    // Si la sección está dentro del viewport (parcialmente visible)
+    if (sectionTop < windowHeight - 50 && sectionBottom > 50) {
+      // Añade la clase para activar la animación
+      if (!section.classList.contains("animate__fadeIn")) {
+        section.classList.add("animate__fadeIn");
+      }
+    } else {
+      // Quita la clase cuando la sección sale del viewport para reiniciar la animación
+      if (section.classList.contains("animate__fadeIn")) {
+        section.classList.remove("animate__fadeIn");
+      }
+    }
+  });
+}
+
+// Ejecutar al hacer scroll
+window.addEventListener("scroll", scrollAnimation);
+
+// Ejecutar al cargar la página para las secciones visibles inicialmente
+window.addEventListener("load", scrollAnimation);
+
+/* ... (mantén el resto del código como está) ... */
