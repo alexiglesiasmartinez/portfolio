@@ -4,7 +4,6 @@ const navMenu = document.getElementById("nav-menu"),
   navClose = document.getElementById("nav-close");
 
 /*===== MENU SHOW =====*/
-/* Validate if constant exists */
 if (navToggle) {
   navToggle.addEventListener("click", () => {
     navMenu.classList.add("show-menu");
@@ -12,7 +11,6 @@ if (navToggle) {
 }
 
 /*===== MENU HIDDEN =====*/
-/* Validate if constant exists */
 if (navClose) {
   navClose.addEventListener("click", () => {
     navMenu.classList.remove("show-menu");
@@ -24,7 +22,6 @@ const navLink = document.querySelectorAll(".nav__link");
 
 function linkAction() {
   const navMenu = document.getElementById("nav-menu");
-  // When we click on each nav__link, we remove the show-menu class
   navMenu.classList.remove("show-menu");
 }
 navLink.forEach((n) => n.addEventListener("click", linkAction));
@@ -91,33 +88,38 @@ modalCloses.forEach((modalClose) => {
   });
 });
 
-/*==================== PORTFOLIO SWIPER  ====================*/
+/*==================== PORTFOLIO SWIPER ====================*/
 let swiperPortfolio = new Swiper(".portfolio__container", {
-  cssMode: true,
-  loop: true,
-
-  navigation: {
-    nextEl: ".swiper-button-next",
-    prevEl: ".swiper-button-prev",
-  },
-
+  grabCursor: true,
+  loop: false,
+  slidesPerView: 1,
+  spaceBetween: 45,
+  centeredSlides: false,
+  initialSlide: 0,
   pagination: {
     el: ".swiper-pagination",
     clickable: true,
   },
-
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
   mousewheel: true,
   keyboard: true,
+  observer: true,
+  observeParents: true,
 });
 
+/*==================== PORTFOLIO MODAL (CORREGIDO) ====================*/
 const modalPortfolio = document.getElementById('portfolio-modal');
 const modalVideoSource = modalPortfolio.querySelector('.portfolio__modal-video source');
 
 document.querySelectorAll('.portfolio__button').forEach(button => {
     button.addEventListener('click', () => {
-        const slide = button.closest('.swiper-slide');
-        const videoSrc = slide.getAttribute('data-video');
-        const title = slide.getAttribute('data-title');
+        const card = button.closest('.portfolio__card'); 
+        const videoSrc = card.getAttribute('data-video');
+        const title = card.getAttribute('data-title');
+        
         modalVideoSource.setAttribute('src', videoSrc || "");
         const video = modalPortfolio.querySelector('.portfolio__modal-video');
         video.load();
@@ -168,7 +170,6 @@ window.addEventListener("scroll", scrollActive);
 /*==================== CHANGE BACKGROUND HEADER ====================*/
 function scrollHeader() {
   const nav = document.getElementById("header");
-  // When the scroll is greater than 200 viewport height, add the scroll-header class to the header tag
   if (this.scrollY >= 80) nav.classList.add("scroll-header");
   else nav.classList.remove("scroll-header");
 }
@@ -177,7 +178,6 @@ window.addEventListener("scroll", scrollHeader);
 /*==================== SHOW SCROLL UP ====================*/
 function scrollUp() {
   const scrollUp = document.getElementById("scroll-up");
-  // When the scroll is higher than 560 viewport height, add the show-scroll class to the a tag with the scroll-top class
   if (this.scrollY >= 560) scrollUp.classList.add("show-scroll");
   else scrollUp.classList.remove("show-scroll");
 }
@@ -188,20 +188,14 @@ window.addEventListener("scroll", scrollUp);
 const themeButton = document.getElementById("theme-button");
 const darkTheme = "dark-theme";
 const iconTheme = "uil-sun";
-
-// Previously selected topic (if user selected)
 const selectedTheme = localStorage.getItem("selected-theme");
 const selectedIcon = localStorage.getItem("selected-icon");
-
-// We obtain the current theme that the interface has by validating the dark-theme class
 const getCurrentTheme = () =>
   document.body.classList.contains(darkTheme) ? "dark" : "light";
 const getCurrentIcon = () =>
   themeButton.classList.contains(iconTheme) ? "uil-moon" : "uil-sun";
 
-// We validate if the user previously chose a topic
 if (selectedTheme) {
-  // If the validation is fulfilled, we ask what the issue was to know if we activated or deactivated the dark
   document.body.classList[selectedTheme === "dark" ? "add" : "remove"](
     darkTheme
   );
@@ -210,18 +204,14 @@ if (selectedTheme) {
   );
 }
 
-// Activate / deactivate the theme manually with the button
 themeButton.addEventListener("click", () => {
-  // Add or remove the dark / icon theme
   document.body.classList.toggle(darkTheme);
   themeButton.classList.toggle(iconTheme);
-  // We save the theme and the current icon that the user chose
   localStorage.setItem("selected-theme", getCurrentTheme());
   localStorage.setItem("selected-icon", getCurrentIcon());
 });
 
-// Emailjs
-
+/*==================== EMAIL JS ====================*/
 (function() {
   emailjs.init("B1IYFoxCjAotmQUbh");
 })();
@@ -248,36 +238,23 @@ document.getElementById('contact-form').addEventListener('submit', function(even
   });
 });
 
-/* ... (mantén todo el código existente hasta antes de la función scrollAnimation) ... */
-
 /*==================== SCROLL SECTIONS ANIMATION ====================*/
 function scrollAnimation() {
   const sections = document.querySelectorAll(".section");
   const windowHeight = window.innerHeight;
-
   sections.forEach((section) => {
     const sectionTop = section.getBoundingClientRect().top;
     const sectionBottom = section.getBoundingClientRect().bottom;
-
-    // Si la sección está dentro del viewport (parcialmente visible)
     if (sectionTop < windowHeight - 50 && sectionBottom > 50) {
-      // Añade la clase para activar la animación
       if (!section.classList.contains("animate__fadeIn")) {
         section.classList.add("animate__fadeIn");
       }
     } else {
-      // Quita la clase cuando la sección sale del viewport para reiniciar la animación
       if (section.classList.contains("animate__fadeIn")) {
         section.classList.remove("animate__fadeIn");
       }
     }
   });
 }
-
-// Ejecutar al hacer scroll
 window.addEventListener("scroll", scrollAnimation);
-
-// Ejecutar al cargar la página para las secciones visibles inicialmente
 window.addEventListener("load", scrollAnimation);
-
-/* ... (mantén el resto del código como está) ... */
